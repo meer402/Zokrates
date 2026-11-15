@@ -1,0 +1,46 @@
+---
+title: "Install the PWA"
+description: "Add Zokrates to a phone's home screen and understand what works offline."
+---
+
+## Requirements
+
+Browsers only offer installation when the app is served over HTTPS or from `localhost`. To install on a phone, [deploy](/deploy) the app first.
+
+## Install on a phone
+
+<Tabs>
+  <Tab title="iPhone and iPad">
+    1. Open the site in Safari.
+    2. Tap **Share**.
+    3. Tap **Add to Home Screen**, then **Add**.
+  </Tab>
+  <Tab title="Android">
+    1. Open the site in Chrome.
+    2. Tap the menu, then **Add to Home screen** or **Install app**.
+    3. Confirm with **Install**.
+  </Tab>
+</Tabs>
+
+## What works offline
+
+Zokrates needs a connection to answer. Offline, you get:
+
+- Your saved conversation, if the app shell has loaded before.
+- An offline page when a navigation fails.
+
+Chat requests always go to the network and are never cached.
+
+## How it is built
+
+| File | Role |
+| --- | --- |
+| `src/app/manifest.ts` | The web app manifest: name, colors, icons, display mode |
+| `public/sw.js` | The service worker: offline fallback and static asset cache |
+| `src/components/service-worker-register.tsx` | Registers the service worker in production |
+| `src/app/offline/page.tsx` | The page shown when a navigation fails offline |
+| `public/icons/` | App icons, including a maskable icon for Android |
+
+## Update the service worker
+
+When you change what the service worker precaches, bump the `CACHE` constant in `public/sw.js`. The new worker deletes the old cache when it activates.

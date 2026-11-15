@@ -1,0 +1,62 @@
+---
+title: "Quickstart"
+description: "Run Zokrates locally and send your first message."
+---
+
+## Prerequisites
+
+- Node.js 20.9 or later
+- An Anthropic API key from the [Claude Console](https://platform.claude.com/)
+
+## Run the app
+
+<Steps>
+  <Step title="Clone the repository">
+    ```bash
+    git clone https://github.com/meer402/Zokrates.git
+    cd Zokrates
+    ```
+  </Step>
+  <Step title="Install dependencies">
+    ```bash
+    npm install
+    ```
+  </Step>
+  <Step title="Add your API key">
+    Copy the example environment file, then set `ANTHROPIC_API_KEY` in `.env.local`.
+
+    ```bash
+    cp .env.example .env.local
+    ```
+
+    <Warning>
+      Never commit `.env.local`. The repository's `.gitignore` already excludes it.
+    </Warning>
+  </Step>
+  <Step title="Start the development server">
+    ```bash
+    npm run dev
+    ```
+
+    Open [http://localhost:3000](http://localhost:3000) and send a message.
+  </Step>
+</Steps>
+
+## Test the PWA features
+
+The service worker only registers in a production build. To test installing and the offline page, build and start the app:
+
+```bash
+npm run build && npm start
+```
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="The reply says ANTHROPIC_API_KEY is not set">
+    The server could not find a key. Check that `.env.local` exists in the project root and restart the server after editing it.
+  </Accordion>
+  <Accordion title="The reply says the credentials were rejected">
+    The key is present but invalid or revoked. Create a new key in the Claude Console.
+  </Accordion>
+</AccordionGroup>

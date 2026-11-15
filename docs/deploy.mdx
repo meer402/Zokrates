@@ -1,0 +1,37 @@
+---
+title: "Deploy"
+description: "Put Zokrates on the internet with Vercel or any Node.js host."
+---
+
+<Warning>
+  The chat endpoint has no authentication or rate limiting. Anyone who can reach your deployment can spend your API credits. Add both before you share the URL.
+</Warning>
+
+## Deploy to Vercel
+
+<Steps>
+  <Step title="Import the repository">
+    Go to [vercel.com/new](https://vercel.com/new) and import your copy of the repository. Vercel detects Next.js automatically.
+  </Step>
+  <Step title="Add the API key">
+    In the project's **Settings**, open **Environment Variables** and add `ANTHROPIC_API_KEY`.
+  </Step>
+  <Step title="Deploy">
+    Click **Deploy**. Vercel redeploys on every push to the default branch.
+  </Step>
+</Steps>
+
+## Deploy to another host
+
+Zokrates runs anywhere that runs a Node.js server.
+
+```bash
+npm run build
+npm start
+```
+
+Set `ANTHROPIC_API_KEY` in the host's environment and serve the app over HTTPS so it can be installed.
+
+<Note>
+  The chat endpoint streams its response. If you put a proxy in front of the app, turn off response buffering for `/api/chat`.
+</Note>

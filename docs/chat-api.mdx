@@ -1,0 +1,58 @@
+---
+title: "Chat API"
+description: "Reference for the POST /api/chat endpoint that streams the agent's reply."
+---
+
+The browser talks to one endpoint. It is implemented in `src/app/api/chat/route.ts`.
+
+## Request
+
+`POST /api/chat` with a JSON body.
+
+<ParamField body="messages" type="object[]" required>
+  The conversation so far, oldest first. The last message must have the role `user`.
+
+  <Expandable title="Message fields">
+    <ParamField body="role" type="string" required>
+      Either `user` or `assistant`.
+    </ParamField>
+    <ParamField body="content" type="string" required>
+      The message text. It cannot be empty.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+```bash
+curl -N http://localhost:3000/api/chat \
+  -H "Content-Type: application/json" \
+  -d '{"messages":[{"role":"user","content":"Is virtue teachable?"}]}'
+```
+
+## Response
+
+A successful response has the content type `application/x-ndjson`. Each line is one JSON event.
+
+| Event | Fields | Meaning |
+| --- | --- | --- |
+| `text` | `text` | The next piece of the reply. Append it to what you have. |
+| `done` | `stopReason` | The reply finished. `max_tokens` means it was cut off. |
+| `error` | `message` | The reply failed or was declined. Any text already sent stays valid. |
+
+```json
+{"type":"text","text":"Before I answer: "}
+{"type":"text","text":"what do you mean by virtue?"}
+{"type":"done","stopReason":"end_turn"}
+```
+
+## Errors before the stream starts
+
+These return a JSON body of the form `{"error": "..."}`.
+
+| Status | Cause |
+| --- | --- |
+| `400` | The body is not JSON, or `messages` is missing, too long, or does not end with a user message |
+| `500` | `ANTHROPIC_API_KEY` is not set on the server |
+
+## Limits
+
+The endpoint accepts up to 200 messages of up to 20,000 characters each. Change these in `src/lib/agent.ts`.

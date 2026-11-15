@@ -1,0 +1,26 @@
+---
+title: "Project structure"
+description: "Where things live in the Zokrates repository."
+---
+
+| Path | What it is |
+| --- | --- |
+| `src/lib/agent.ts` | Agent name, system prompt, model, effort, and request limits |
+| `src/app/api/chat/route.ts` | The chat endpoint that streams the model's reply |
+| `src/lib/use-chat.ts` | Client hook: sends a turn, reads the stream, stop and reset |
+| `src/lib/chat-store.ts` | Conversation state, mirrored to `localStorage` |
+| `src/lib/chat-types.ts` | Shared types for messages and stream events |
+| `src/components/chat.tsx` | The chat screen |
+| `src/app/layout.tsx` | Fonts, metadata, viewport, and service worker registration |
+| `src/app/globals.css` | Theme colors and Tailwind setup |
+| `src/app/manifest.ts` | Web app manifest |
+| `public/sw.js` | Service worker |
+| `docs/` | This documentation site |
+
+## Where the conversation is stored
+
+The conversation lives in the browser under the `localStorage` key `zokrates.conversation.v1`. There are no accounts and no server-side history. Clearing site data, or tapping **New chat**, removes it.
+
+## Change the look
+
+Theme colors are CSS variables at the top of `src/app/globals.css`. Update `theme_color` and `background_color` in `src/app/manifest.ts` and `themeColor` in `src/app/layout.tsx` to match.

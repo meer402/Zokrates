@@ -1,0 +1,46 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Zokrates",
+  "description": "Documentation for Zokrates, a mobile PWA for talking to a conversational agent.",
+  "colors": {
+    "primary": "#B07A12",
+    "light": "#D9A441",
+    "dark": "#8A5F0C"
+  },
+  "favicon": "/favicon.svg",
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "navigation": {
+    "groups": [
+      {
+        "group": "Get started",
+        "pages": ["index", "quickstart"]
+      },
+      {
+        "group": "Guides",
+        "pages": ["configure-agent", "install-pwa", "deploy"]
+      },
+      {
+        "group": "Reference",
+        "pages": ["chat-api", "project-structure"]
+      }
+    ]
+  },
+  "navbar": {
+    "primary": {
+      "type": "github",
+      "href": "https://github.com/meer402/Zokrates"
+    }
+  },
+  "contextual": {
+    "options": ["copy", "view", "claude", "chatgpt"]
+  },
+  "footer": {
+    "socials": {
+      "github": "https://github.com/meer402/Zokrates"
+    }
+  }
+}

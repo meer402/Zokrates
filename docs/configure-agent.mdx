@@ -1,0 +1,31 @@
+---
+title: "Configure the agent"
+description: "Change who Zokrates is and which model answers."
+---
+
+Everything about the agent lives in `src/lib/agent.ts`. Edit the file and restart the server.
+
+## Settings
+
+| Export | Default | What it controls |
+| --- | --- | --- |
+| `AGENT_NAME` | `"Zokrates"` | The name used in the system prompt and the interface |
+| `SYSTEM_PROMPT` | A light Socratic persona | How the agent behaves and writes |
+| `MODEL` | `"claude-opus-5-5"` | The Claude model that answers |
+| `EFFORT` | `"low"` | How much reasoning the model spends on each reply |
+| `MAX_TOKENS` | `16000` | The upper limit on one reply's length |
+| `SUGGESTIONS` | Three prompts | The starter prompts on the empty screen |
+| `MAX_MESSAGES` | `200` | The most messages the chat endpoint accepts in one request |
+| `MAX_MESSAGE_CHARS` | `20000` | The longest single message the chat endpoint accepts |
+
+## Write a system prompt
+
+The chat screen renders replies as plain text. Keep the instruction that asks for short conversational paragraphs without Markdown, or add a Markdown renderer to `src/components/chat.tsx`.
+
+## Choose an effort level
+
+`low` keeps replies quick on a phone. Raise `EFFORT` to `medium` or `high` if your agent handles harder questions and you can accept slower, costlier replies.
+
+## Refusal fallback
+
+The chat endpoint enables the Claude API's server-side fallback. If a safety classifier declines a request, the API retries it on a fallback model within the same call. To turn this off, remove the `betas` and `fallbacks` fields in `src/app/api/chat/route.ts`.
